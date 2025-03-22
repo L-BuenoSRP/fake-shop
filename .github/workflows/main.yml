@@ -21,7 +21,7 @@ jobs: #Agrupamento de ações a ser executados
         context: ./src
         push: true
         file: ./src/Dockerfile
-        tags: buenodsev/fake-shop-desafio:latest
+        tags: buenodsev/fake-shop-desafio:${{ github.run_number }}
  CD:
    needs: CI #Dependência da execução do job CI
    runs-on: ubuntu-latest
