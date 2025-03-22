@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgre
+spec:
+  # replicas: 1
+  selector:
+    matchLabels:
+      app: postgre
+  template:
+    metadata:
+      labels:
+        app: postgre
+    spec:
+      containers:
+      - name: postgre
+        image: postgres:13.16
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5432
+        env:
+        - name: POSTGRES_USER
+          value: ecommerce
+        - name: POSTGRES_PASSWORD
+          value: Pg1234
+        - name: POSTGRES_DB
+          value: ecommerce
+      #   volumeMounts:
+      #   - name: postgree-pv
+      #     mountPath: /var/lib/postgresql/data
+      # volumes:
+      # - name: postgree-pv
+      #   persistentVolumeClaim:
+      #     claimName: postgree-pvc
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: postgre
+spec:
+  selector:
+    app: postgre
+  ports:
+    # - protocol: TCP
+    #   port: 5432
+    #   targetPort: 5432
+    - port: 5432
+  type: ClusterIP
+
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fakeshop
+spec:
+  replicas: 10
+  selector:
+    matchLabels:
+      app: fakeshop
+  template:
+    metadata:
+      labels:
+        app: fakeshop
+    spec:
+      containers:
+      - name: fakeshop
+        image: buenodsev/fake-shop-desafio:2.2
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 5000
+        env:
+          - name: DB_HOST
+            value: postgre
+          - name: DB_USER
+            value: ecommerce
+          - name: DB_PASSWORD
+            value: Pg1234
+          - name: DB_NAME
+            value: ecommerce
+          - name: DB_PORT
+            value: "5432"
+          - name: FLASK_APP
+            value: index.py
+        
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: fakeshop
+spec:
+  selector:
+    app: fakeshop
+  ports:
+    - port: 80 #Porta de acesso externo
+      targetPort: 5000 #Porta de acesso interno(Containers)
+      nodePort: 30000
+  # type: NodePort #Uso em on-premises
+  type: LoadBalancer #Uso em cloud
