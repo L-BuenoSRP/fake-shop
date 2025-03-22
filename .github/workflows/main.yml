@@ -40,4 +40,4 @@ jobs: #Agrupamento de ações a ser executados
        with:
         manifests: |
           k8s/deployment.yaml
-       images: buenodsev/fake-shop-desafio:${{ github.run_number }}
+        images: buenodsev/fake-shop-desafio:${{ github.run_number }}
