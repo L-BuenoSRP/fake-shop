@@ -21,11 +21,23 @@ jobs: #Agrupamento de ações a ser executados
         context: ./src
         push: true
         file: ./src/Dockerfile
-        tags: buenodsev/fake-shop-desafio:${{ github.run_number }}
+        tags: |
+          buenodsev/fake-shop-desafio:${{ github.run_number }}
+          buenodsev/fake-shop-desafio:latest
  CD:
    needs: CI #Dependência da execução do job CI
    runs-on: ubuntu-latest
    steps:
-     - run: echo "Obter o codigo"
-     - run: echo "Configurar o kubeconfig"
-     - run: echo "Executar o apply"
+     - name: Obter o codigo
+       uses: actions/checkout@v4.2.2
+     - name: KubeConfig
+       uses: azure/k8s-set-context@v4
+       with:
+        method: kubeconfig
+        kubeconfig: ${{secrets.K8S_KUBECONFIG}}
+     - name: Apply kubernetes
+       uses: Azure/k8s-deploy@v5
+       with:
+        manifests: |
+          k8s/deployment.yaml
+       images: buenodsev/fake-shop-desafio:${{ github.run_number }}
