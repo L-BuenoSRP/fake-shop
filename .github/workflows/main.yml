@@ -12,6 +12,7 @@ jobs: #Agrupamento de ações a ser executados
      - run: echo "Executar o docker build"
      - run: echo "Enviar a imagem docker para o Docker Hub"
  CD:
+   needs: CI #Dependência da execução do job CI
    runs-on: ubuntu-latest
    steps:
      - run: echo "Obter o codigo"
