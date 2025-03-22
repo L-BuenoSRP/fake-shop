@@ -1,0 +1,19 @@
+name: CI-CD
+on: #Especificação do evento(trigger)
+  push:
+    branches: ["main"]
+  workflow_dispatch:
+
+jobs: #Agrupamento de ações a ser executados
+ CI:
+   runs-on: ubuntu-latest #Runner (Onde irá executar a automação)
+   steps: #Cada tarefa a ser executada
+     - run: echo "Obter codigo"
+     - run: echo "Executar o docker build"
+     - run: echo "Enviar a imagem docker para o Docker Hub"
+ CD:
+   runs-on: ubuntu-latest
+   steps:
+     - run: echo "Obter o codigo"
+     - run: echo "Configurar o kubeconfig"
+     - run: echo "Executar o apply"
