@@ -84,16 +84,16 @@ kubectl api-resources
 `kubectl delete pod fakeshop-784fbc4fb4-9v8hk`
 
 #### Busca os services
-kubectl get service
+`kubectl get service`
 
 #### Busca os deployments
-kubectl get deployment
+`kubectl get deployment`
 
 #### Busca os replicaset
-kubectl get replicaset
+`kubectl get replicaset`
 
 #### Busca todos os objetos existentes
-kubectl get all
+`kubectl get all`
 
 #### Mapeia a porta para acesso externo na maquina hospedeira(funciona apenas em k3d / não funciona em ambiente cloud, nestes é necessario definir o service com mapeamento de loadbalancer na declaração do arquivo deployment)
 `kubectl port-forward service/fakeshop 5000:5000`
