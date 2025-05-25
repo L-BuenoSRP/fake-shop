@@ -53,6 +53,9 @@ kubectl api-resources
 #### Remove o objeto declarado - remove o depoloyment e container
 `kubectl delete -f k8s/deployment.yaml`
 
+
+kubectl rollout undo deployment fakeshop
+
 #### Consulta os pods
 `kubectl get pod`
 
