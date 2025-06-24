@@ -113,3 +113,10 @@ kubectl rollout undo deployment fakeshop
 
 #### Dentro do WSL, baixa dependencias de uso do vscode pelo wsl e abre em um arquivo especifico no caminho /home/.kube/config
 `code ~/.kube/config`
+
+Links
+
+
+https://github.com/LucasGLGoncalves/cluster-commands-creator?tab=readme-ov-file
+
+https://lucasglgoncalves.github.io/cluster-commands-creator/
